@@ -42,7 +42,7 @@ After integrating with your build system, just download SDL.
 .\vcpkg\vcpkg.exe install sdl2:x64-windows Be careful about selecting the correct triplet (x64-windows in my example), otherwise your linking will fail!">
 <meta itemprop="datePublished" content="2020-09-04T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2020-09-04T00:00:00+00:00" />
-<meta itemprop="wordCount" content="178">
+<meta itemprop="wordCount" content="464">
 <meta itemprop="image" content="https://matiaslaino.github.io/"/>
 
 
@@ -142,7 +142,7 @@ After integrating with your build system, just download SDL.
           <circle cx="12" cy="12" r="10"></circle>
           <polyline points="12 6 12 12 16 14"></polyline>
         </svg>
-        One minute
+        3 minutes
 
         
       </p>
@@ -182,7 +182,98 @@ After integrating with your build system, just download SDL.
 </span><span style="color:#960050;background-color:#1e0010"></span>target_link_libraries(<span style="color:#e6db74">my_project</span> <span style="color:#e6db74">PRIVATE</span> <span style="color:#e6db74">SDL2::SDL2_image</span>)<span style="color:#960050;background-color:#1e0010">
 </span><span style="color:#960050;background-color:#1e0010"></span>target_link_libraries(<span style="color:#e6db74">my_project</span> <span style="color:#e6db74">PRIVATE</span> <span style="color:#e6db74">SDL2::SDL2_ttf</span>)<span style="color:#960050;background-color:#1e0010">
 </span></code></pre></div><p>vcpkg is nice enough to tell you exactly which lines to copy and paste in your CMake file.</p>
+<p>note: in my example i also linked libraries to sdl2-image and sdl2-ttf library, previously installed using vcpkg.</p>
+<p>You&rsquo;re all set to use SDL2 in your C++ project.</p>
+<p>Following is a quick example taken from the wonderful <a href="https://lazyfoo.net/tutorials/SDL/index.php">LazyFoo&rsquo;s SDL2 tutorial</a>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;SDL_image.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;SDL.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+SDL_Window <span style="color:#f92672">*</span>gWindow <span style="color:#f92672">=</span> NULL;
+SDL_Renderer <span style="color:#f92672">*</span>gRenderer <span style="color:#f92672">=</span> NULL;
 
+<span style="color:#66d9ef">bool</span> <span style="color:#a6e22e">init</span>() {
+    <span style="color:#75715e">//Initialization flag
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">bool</span> success <span style="color:#f92672">=</span> true;
+
+    <span style="color:#75715e">//Initialize SDL
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> (SDL_Init(SDL_INIT_VIDEO) <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>) {
+        printf(<span style="color:#e6db74">&#34;SDL could not initialize! SDL Error: %s</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, SDL_GetError());
+        success <span style="color:#f92672">=</span> false;
+    } <span style="color:#66d9ef">else</span> {
+        <span style="color:#75715e">//Set texture filtering to linear
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, <span style="color:#ae81ff">0</span>)) {
+            printf(<span style="color:#e6db74">&#34;Warning: Linear texture filtering not enabled!&#34;</span>);
+        }
+
+        <span style="color:#75715e">//Create window
+</span><span style="color:#75715e"></span>        gWindow <span style="color:#f92672">=</span> SDL_CreateWindow(<span style="color:#e6db74">&#34;My first window&#34;</span>, SDL_WINDOWPOS_UNDEFINED,
+                                   SDL_WINDOWPOS_UNDEFINED, <span style="color:#ae81ff">640</span>, <span style="color:#ae81ff">480</span>, SDL_WINDOW_SHOWN);
+        <span style="color:#66d9ef">if</span> (gWindow <span style="color:#f92672">==</span> NULL) {
+            printf(<span style="color:#e6db74">&#34;Window could not be created! SDL Error: %s</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, SDL_GetError());
+            success <span style="color:#f92672">=</span> false;
+        } <span style="color:#66d9ef">else</span> {
+            <span style="color:#75715e">//Create renderer for window
+</span><span style="color:#75715e"></span>            gRenderer <span style="color:#f92672">=</span> SDL_CreateRenderer(gWindow, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, SDL_RENDERER_ACCELERATED <span style="color:#f92672">|</span> SDL_RENDERER_PRESENTVSYNC);
+            <span style="color:#66d9ef">if</span> (gRenderer <span style="color:#f92672">==</span> NULL) {
+                printf(<span style="color:#e6db74">&#34;Renderer could not be created! SDL Error: %s</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, SDL_GetError());
+                success <span style="color:#f92672">=</span> false;
+            } <span style="color:#66d9ef">else</span> {
+                <span style="color:#75715e">//Initialize renderer color
+</span><span style="color:#75715e"></span>                SDL_SetRenderDrawColor(gRenderer, <span style="color:#ae81ff">0xFF</span>, <span style="color:#ae81ff">0xFF</span>, <span style="color:#ae81ff">0xFF</span>, <span style="color:#ae81ff">0xFF</span>);
+
+                <span style="color:#75715e">//Initialize PNG loading
+</span><span style="color:#75715e"></span>                <span style="color:#66d9ef">int</span> imgFlags <span style="color:#f92672">=</span> IMG_INIT_PNG;
+                <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>(IMG_Init(imgFlags) <span style="color:#f92672">&amp;</span> imgFlags)) {
+                    printf(<span style="color:#e6db74">&#34;SDL_image could not initialize! SDL_image Error: %s</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, IMG_GetError());
+                    success <span style="color:#f92672">=</span> false;
+                }
+            }
+        }
+    }
+
+    <span style="color:#66d9ef">return</span> success;
+}
+
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">int</span> argc, <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>args[]) {
+    std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;Hello, World!&#34;</span> <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
+
+    <span style="color:#75715e">//Start up SDL and create window
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>init()) {
+        printf(<span style="color:#e6db74">&#34;Failed to initialize!</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+    } <span style="color:#66d9ef">else</span> {
+        <span style="color:#75715e">//Load media
+</span><span style="color:#75715e"></span>
+        <span style="color:#75715e">//Main loop flag
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">bool</span> quit <span style="color:#f92672">=</span> false;
+
+        <span style="color:#75715e">//Event handler
+</span><span style="color:#75715e"></span>        SDL_Event e;
+
+        SDL_RenderSetLogicalSize(gRenderer, <span style="color:#ae81ff">320</span>, <span style="color:#ae81ff">200</span>);
+
+        <span style="color:#75715e">//While application is running
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">while</span> (<span style="color:#f92672">!</span>quit) {
+            <span style="color:#75715e">//Handle events on queue
+</span><span style="color:#75715e"></span>            <span style="color:#66d9ef">while</span> (SDL_PollEvent(<span style="color:#f92672">&amp;</span>e) <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span>) {
+                <span style="color:#75715e">//User requests quit
+</span><span style="color:#75715e"></span>                <span style="color:#66d9ef">if</span> (e.type <span style="color:#f92672">==</span> SDL_QUIT) {
+                    quit <span style="color:#f92672">=</span> true;
+                }
+            }
+
+            <span style="color:#75715e">//Clear screen
+</span><span style="color:#75715e"></span>            SDL_SetRenderDrawColor(gRenderer, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0xAF</span>, <span style="color:#ae81ff">0</span>);
+            SDL_RenderClear(gRenderer);
+
+            <span style="color:#75715e">//Update screen
+</span><span style="color:#75715e"></span>            SDL_RenderPresent(gRenderer);
+        }
+    }
+
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+}
+</code></pre></div>
       </div>
     </article>
 
@@ -204,7 +295,7 @@ After integrating with your build system, just download SDL.
           <line x1="16" y1="17" x2="8" y2="17"></line>
           <polyline points="10 9 9 9 8 9"></polyline>
         </svg>
-        178 Words
+        464 Words
       </p>
 
       <p>
