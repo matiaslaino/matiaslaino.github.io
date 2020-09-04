@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <url>
+    <loc>https://matiaslaino.github.io/posts/installing-openjdk-7-in-ubuntu/</loc>
+    <lastmod>2017-10-07T00:23:03+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://matiaslaino.github.io/tags/java/</loc>
+    <lastmod>2017-10-07T00:23:03+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://matiaslaino.github.io/tags/openjdk/</loc>
+    <lastmod>2017-10-07T00:23:03+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://matiaslaino.github.io/posts/</loc>
+    <lastmod>2017-10-07T00:23:03+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://matiaslaino.github.io/</loc>
+    <lastmod>2017-10-07T00:23:03+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://matiaslaino.github.io/tags/</loc>
+    <lastmod>2017-10-07T00:23:03+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://matiaslaino.github.io/tags/ubuntu/</loc>
+    <lastmod>2017-10-07T00:23:03+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://matiaslaino.github.io/blog/</loc>
+  </url>
+  
+  <url>
+    <loc>https://matiaslaino.github.io/series/</loc>
+  </url>
+  
+</urlset>

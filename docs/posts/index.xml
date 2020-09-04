@@ -1,0 +1,67 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Posts on Sit a while a listen...</title>
+        <link>https://matiaslaino.github.io/posts/</link>
+        <description>Recent content in Posts on Sit a while a listen...</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en-us</language>
+        <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
+        <lastBuildDate>Sat, 07 Oct 2017 00:23:03 +0200</lastBuildDate>
+        <atom:link href="https://matiaslaino.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+        
+        <item>
+            <title>Installing Open JDK 7 in Ubuntu (Tested in 17.04)</title>
+            <link>https://matiaslaino.github.io/posts/installing-openjdk-7-in-ubuntu/</link>
+            <pubDate>Sat, 07 Oct 2017 00:23:03 +0200</pubDate>
+            
+            <guid>https://matiaslaino.github.io/posts/installing-openjdk-7-in-ubuntu/</guid>
+            <description>Installing Open JDK 7 in Ubuntu (Tested in 17.04) This is the only approach I could find that worked.
+Copy of the steps:
+ Download the packages intended for your architecture: (for most users, this means amd64 if 64bit, or i386 if 32bit Ubuntu is installed)   openjdk-7-jdk openjdk-7-jre openjdk-7-jre-headless libjpeg62-turbo libfontconfig1 fontconfig-config  (Attempt to) install the packages using dpkg: bash sudo dpkg -i openjdk-7-* libjpeg62-turbo* libfontconfig1* fontconfig-config*  Check the output from dpkg.</description>
+            <content type="html"><![CDATA[<h2 id="installing-open-jdk-7-in-ubuntu-tested-in-1704">Installing Open JDK 7 in Ubuntu (Tested in 17.04)</h2>
+<p><a href="https://askubuntu.com/a/803616/742055">This is the only approach I could find that worked</a>.</p>
+<p>Copy of the steps:</p>
+<ol>
+<li>Download the packages intended for your architecture:
+(for most users, this means amd64 if 64bit, or i386 if 32bit Ubuntu is installed)</li>
+</ol>
+<ul>
+<li><a href="https://packages.debian.org/experimental/openjdk-7-jdk">openjdk-7-jdk</a></li>
+<li><a href="https://packages.debian.org/experimental/openjdk-7-jre">openjdk-7-jre</a></li>
+<li><a href="https://packages.debian.org/experimental/openjdk-7-jre-headless">openjdk-7-jre-headless</a></li>
+<li><a href="https://packages.debian.org/sid/libjpeg62-turbo">libjpeg62-turbo</a></li>
+<li><a href="https://packages.debian.org/sid/libfontconfig1">libfontconfig1</a></li>
+<li><a href="https://packages.debian.org/sid/fontconfig-config">fontconfig-config</a></li>
+</ul>
+<ol start="2">
+<li>(Attempt to) install the packages using dpkg:
+<code>bash sudo dpkg -i openjdk-7-* libjpeg62-turbo* libfontconfig1* fontconfig-config* </code>
+Check the output from dpkg. If there were dependency problems - which is likely - you will see the following (with your architecture substituted for amd64):</li>
+</ol>
+<blockquote>
+<p>Errors were encountered while processing:
+openjdk-7-jre:amd64
+openjdk-7-jre-headless:amd64
+openjdk-7-jdk:amd64
+If there were no dependency issues, great, you&rsquo;re done, skip to #4. Otherwise, if you need to resolve some dependency issues, this is handled with:</p>
+</blockquote>
+<ol start="3">
+<li><code>bash sudo apt install -f</code>
+Notice, there is no need to re-run dpkg after letting apt resolve dependencies. It will automatically finish installation of the openjdk packages.</li>
+<li>Update java alternatives. You can view all installed java versions with update-java-alternatives &ndash;list. To activate OpenJDK Java 1.7, run:
+<code>bash sudo update-java-alternatives -s java-1.7.0-openjdk-amd64</code>
+You may notice an error about the IcedTeaPlugin.so plugin being unavailable. This isn&rsquo;t a real concern for developers working with the JDK.</li>
+<li>Verify java is working:
+<code>bash java -version</code>
+which should output something similar to:</li>
+</ol>
+<blockquote>
+<p>java version &ldquo;1.7.0_121&rdquo;
+OpenJDK Runtime Environment (IcedTea 2.6.8) (7u121-2.6.8-1)
+OpenJDK 64-Bit Server VM (build 24.121-b00, mixed mode)</p>
+</blockquote>
+]]></content>
+        </item>
+        
+    </channel>
+</rss>

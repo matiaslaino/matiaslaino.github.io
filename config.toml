@@ -2,6 +2,7 @@ baseURL = "https://matiaslaino.github.io/"
 languageCode = "en-us"
 title = "My untitled blog"
 theme = "hello-friend-ng"
+publishDir = "docs"
 
 paginate     = 10
 
