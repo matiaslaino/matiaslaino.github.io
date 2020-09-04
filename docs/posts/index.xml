@@ -6,8 +6,47 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
         <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
-        <lastBuildDate>Sat, 07 Oct 2017 00:23:03 +0200</lastBuildDate>
+        <lastBuildDate>Fri, 04 Sep 2020 00:00:00 +0000</lastBuildDate>
         <atom:link href="https://matiaslaino.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+        
+        <item>
+            <title>Using SDL2 with vcpkg and CMake</title>
+            <link>https://matiaslaino.github.io/posts/sdl_vcpkg_cmake/</link>
+            <pubDate>Fri, 04 Sep 2020 00:00:00 +0000</pubDate>
+            
+            <guid>https://matiaslaino.github.io/posts/sdl_vcpkg_cmake/</guid>
+            <description>Managing dependencies in C++ is much more complicated than it needs to be, thankfully there is a tool from Microsoft that makes it super easy!
+is a pseudo-Maven for C++ projects which helps managing libraries; it even manages artifacts for different architectures, very neat :)
+After integrating with your build system, just download SDL.
+.\vcpkg\vcpkg.exe install sdl2:x64-windows Be careful about selecting the correct triplet (x64-windows in my example), otherwise your linking will fail!</description>
+            <content type="html"><![CDATA[<p>Managing dependencies in C++ is much more complicated than it needs to be, thankfully there is a tool from Microsoft that makes it super easy!</p>
+<p>is a pseudo-Maven for C++ projects which helps managing libraries; it even manages artifacts for different architectures, very neat :)</p>
+<p>After integrating with your build system, just download SDL.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-powershell" data-lang="powershell">.\vcpkg\vcpkg.exe install sdl2<span style="color:#960050;background-color:#1e0010">:</span>x64-windows
+</code></pre></div><p>Be careful about selecting the correct triplet (x64-windows in my example), otherwise your linking will fail!</p>
+<p>If integrated with VC++, this should already leave SDL ready to be used with #include, no more messing around with C++ Linker options, VC++ directories and all that nonsense!</p>
+<p>If you want to use CLion, however, you&rsquo;ll need to mess around with the CMake file, just add the adequate flag to your CMake configuration:</p>
+<pre><code>-DCMAKE_TOOLCHAIN_FILE=C:/dev/vcpkg/scripts/buildsystems/vcpkg.cmake
+</code></pre><p>(this is all further explained in vcpkg when you execute it!)</p>
+<p>And finally the CMake file.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cmake" data-lang="cmake">cmake_minimum_required(<span style="color:#e6db74">VERSION</span> <span style="color:#e6db74">3.17</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>project(<span style="color:#e6db74">my_project</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>set(<span style="color:#e6db74">CMAKE_CXX_STANDARD</span> <span style="color:#e6db74">17</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>find_package(<span style="color:#e6db74">SDL2</span> <span style="color:#e6db74">CONFIG</span> <span style="color:#e6db74">REQUIRED</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>find_package(<span style="color:#e6db74">sdl2-image</span> <span style="color:#e6db74">CONFIG</span> <span style="color:#e6db74">REQUIRED</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>find_package(<span style="color:#e6db74">sdl2-ttf</span> <span style="color:#e6db74">CONFIG</span> <span style="color:#e6db74">REQUIRED</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>add_executable(<span style="color:#e6db74">my_project</span> <span style="color:#e6db74">main.cpp</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>target_link_libraries(<span style="color:#e6db74">my_project</span> <span style="color:#e6db74">PRIVATE</span> <span style="color:#e6db74">SDL2::SDL2</span> <span style="color:#e6db74">SDL2::SDL2main</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>target_link_libraries(<span style="color:#e6db74">my_project</span> <span style="color:#e6db74">PRIVATE</span> <span style="color:#e6db74">SDL2::SDL2_image</span>)<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>target_link_libraries(<span style="color:#e6db74">my_project</span> <span style="color:#e6db74">PRIVATE</span> <span style="color:#e6db74">SDL2::SDL2_ttf</span>)<span style="color:#960050;background-color:#1e0010">
+</span></code></pre></div><p>vcpkg is nice enough to tell you exactly which lines to copy and paste in your CMake file.</p>
+]]></content>
+        </item>
         
         <item>
             <title>Installing Open JDK 7 in Ubuntu (Tested in 17.04)</title>

@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Sit a while a listen...</title>
-    <link>https://matiaslaino.github.io/</link>
-    <description>Recent content on Sit a while a listen...</description>
+    <title>c&#43;&#43; on Sit a while a listen...</title>
+    <link>https://matiaslaino.github.io/tags/c&#43;&#43;/</link>
+    <description>Recent content in c&#43;&#43; on Sit a while a listen...</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
     <lastBuildDate>Fri, 04 Sep 2020 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://matiaslaino.github.io/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://matiaslaino.github.io/tags/c++/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -22,17 +22,6 @@
 is a pseudo-Maven for C++ projects which helps managing libraries; it even manages artifacts for different architectures, very neat :)
 After integrating with your build system, just download SDL.
 .\vcpkg\vcpkg.exe install sdl2:x64-windows Be careful about selecting the correct triplet (x64-windows in my example), otherwise your linking will fail!</description>
-    </item>
-    
-    <item>
-      <title>Installing Open JDK 7 in Ubuntu (Tested in 17.04)</title>
-      <link>https://matiaslaino.github.io/posts/installing-openjdk-7-in-ubuntu/</link>
-      <pubDate>Sat, 07 Oct 2017 00:23:03 +0200</pubDate>
-      
-      <guid>https://matiaslaino.github.io/posts/installing-openjdk-7-in-ubuntu/</guid>
-      <description>Installing Open JDK 7 in Ubuntu (Tested in 17.04) This is the only approach I could find that worked.
-Copy of the steps:
- Download the packages intended for your architecture: (for most users, this means amd64 if 64bit, or i386 if 32bit Ubuntu is installed)   openjdk-7-jdk openjdk-7-jre openjdk-7-jre-headless libjpeg62-turbo libfontconfig1 fontconfig-config  (Attempt to) install the packages using dpkg: bash sudo dpkg -i openjdk-7-* libjpeg62-turbo* libfontconfig1* fontconfig-config*  Check the output from dpkg.</description>
     </item>
     
   </channel>
