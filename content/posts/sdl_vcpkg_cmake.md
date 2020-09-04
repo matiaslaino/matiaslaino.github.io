@@ -56,3 +56,100 @@ target_link_libraries(my_project PRIVATE SDL2::SDL2_ttf)
 ```
 
 vcpkg is nice enough to tell you exactly which lines to copy and paste in your CMake file.
+
+note: in my example i also linked libraries to sdl2-image and sdl2-ttf library, previously installed using vcpkg.
+
+You're all set to use SDL2 in your C++ project.
+
+Following is a quick example taken from the wonderful [LazyFoo's SDL2 tutorial](https://lazyfoo.net/tutorials/SDL/index.php):
+
+```c++
+#include <iostream>
+#include <SDL_image.h>
+#include <SDL.h>
+
+SDL_Window *gWindow = NULL;
+SDL_Renderer *gRenderer = NULL;
+
+bool init() {
+    //Initialization flag
+    bool success = true;
+
+    //Initialize SDL
+    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+        printf("SDL could not initialize! SDL Error: %s\n", SDL_GetError());
+        success = false;
+    } else {
+        //Set texture filtering to linear
+        if (!SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, 0)) {
+            printf("Warning: Linear texture filtering not enabled!");
+        }
+
+        //Create window
+        gWindow = SDL_CreateWindow("My first window", SDL_WINDOWPOS_UNDEFINED,
+                                   SDL_WINDOWPOS_UNDEFINED, 640, 480, SDL_WINDOW_SHOWN);
+        if (gWindow == NULL) {
+            printf("Window could not be created! SDL Error: %s\n", SDL_GetError());
+            success = false;
+        } else {
+            //Create renderer for window
+            gRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+            if (gRenderer == NULL) {
+                printf("Renderer could not be created! SDL Error: %s\n", SDL_GetError());
+                success = false;
+            } else {
+                //Initialize renderer color
+                SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+
+                //Initialize PNG loading
+                int imgFlags = IMG_INIT_PNG;
+                if (!(IMG_Init(imgFlags) & imgFlags)) {
+                    printf("SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError());
+                    success = false;
+                }
+            }
+        }
+    }
+
+    return success;
+}
+
+int main(int argc, char *args[]) {
+    std::cout << "Hello, World!" << std::endl;
+
+    //Start up SDL and create window
+    if (!init()) {
+        printf("Failed to initialize!\n");
+    } else {
+        //Load media
+
+        //Main loop flag
+        bool quit = false;
+
+        //Event handler
+        SDL_Event e;
+
+        SDL_RenderSetLogicalSize(gRenderer, 320, 200);
+
+        //While application is running
+        while (!quit) {
+            //Handle events on queue
+            while (SDL_PollEvent(&e) != 0) {
+                //User requests quit
+                if (e.type == SDL_QUIT) {
+                    quit = true;
+                }
+            }
+
+            //Clear screen
+            SDL_SetRenderDrawColor(gRenderer, 0, 0, 0xAF, 0);
+            SDL_RenderClear(gRenderer);
+
+            //Update screen
+            SDL_RenderPresent(gRenderer);
+        }
+    }
+
+    return 0;
+}
+```
